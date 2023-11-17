@@ -50,7 +50,7 @@ def update_peak_values(data: pd.DataFrame, prominence: int):
 
     local_max_dict[saddlepoint_time] = saddlepoint_intensity
 
-    df_local_max = pd.DataFrame(dict(local_max_dict.items()), columns=['R.Time (min)', 'Intensity'])
+    df_local_max = pd.DataFrame(local_max_dict.items(), columns=['R.Time (min)', 'Intensity'])
         
     df_local_max["measurement"] = 1
 
