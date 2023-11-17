@@ -38,16 +38,45 @@ def load_transaction_data(path: str) -> pd.DataFrame:
 
     return preprocessor(data)
 
-def update_peak_values(data: pd.DataFrame, value: int):
+def update_peak_values(data: pd.DataFrame, prominence: int):
     peaks, _ = find_peaks(data[DataSchema.INTENSITY],
-                        prominence=value, 
+                        prominence=prominence, 
                         width=3, 
                         height=32000)
 
-    local_max = {data[DataSchema.TIME][_] : data[DataSchema.INTENSITY][_] for _ in peaks}
+    saddlepoint_time, saddlepoint_intensity = get_saddle_point(data,1320,1327)
 
-    df_local_max = pd.DataFrame(list(local_max.items()), columns=['R.Time (min)', 'Intensity'])
-    
+    local_max_dict = {data[DataSchema.TIME][_] : data[DataSchema.INTENSITY][_] for _ in peaks}
+
+    local_max_dict[saddlepoint_time] = saddlepoint_intensity
+
+    df_local_max = pd.DataFrame(dict(local_max_dict.items()), columns=['R.Time (min)', 'Intensity'])
+        
     df_local_max["measurement"] = 1
 
     return df_local_max
+
+def get_saddle_point(data: pd.DataFrame, lower_limit, upper_limit):
+    
+    delta_dict = {}
+    for index, row in data.iterrows():
+        if index > lower_limit and index < upper_limit:
+            
+            current_time = data.iloc[index+1]["R.Time (min)"]
+            current_row_values = row[['R.Time (min)', 'Intensity']]
+            next_row_values = data.iloc[row.name + 1][['R.Time (min)', 'Intensity']]
+       
+            delta_current = abs((next_row_values - current_row_values)["Intensity"])
+
+            delta_dict[index+1] = delta_current
+
+        else:
+            continue
+        
+    saddlepoint_index = min(delta_dict, key=delta_dict.get)
+    saddlepoint_time = data.iloc[saddlepoint_index-1]["R.Time (min)"]
+    saddlepoint_intensity = data.iloc[saddlepoint_index-1]["Intensity"]
+    
+    return saddlepoint_time, saddlepoint_intensity
+
+
