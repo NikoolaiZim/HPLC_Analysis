@@ -1,0 +1,8 @@
+PROMINENCE_SLIDER = 'prominence-slider'
+SERIES_LINE_PLOT = 'series-line-plot'
+SLIDER_CONTAINER = 'slider-output-container'
+PEAK_TABLE = 'peak-table'
+PROMINENCE_INPUT = 'prominence-input'
+SLIDER_INTERVALL = 'slider-intervall'
+LINE_PLOT = 'line-plot'
+RESET_BUTTON = 'reset-button'
