@@ -44,40 +44,50 @@ def update_peak_values(data: pd.DataFrame, prominence: int):
                         width=3, 
                         height=32000)
 
-    saddlepoint_time, saddlepoint_intensity = get_saddle_point(data,1320,1327)
 
     local_max_dict = {data[DataSchema.TIME][_] : data[DataSchema.INTENSITY][_] for _ in peaks}
-
-    local_max_dict[saddlepoint_time] = saddlepoint_intensity
+    
 
     df_local_max = pd.DataFrame(local_max_dict.items(), columns=['R.Time (min)', 'Intensity'])
-    df_local_max.loc[df_local_max["R.Time (min)"] == saddlepoint_time, "Peak Type"] = "Saddlepoint"        
+    df_local_max["Peak Type"] = "Peak"
 
     df_local_max.sort_values(by="R.Time (min)", inplace=True)
 
     return df_local_max
 
 def get_saddle_point(data: pd.DataFrame, lower_limit, upper_limit):
-    
-    delta_dict = {}
-    for index, row in data.iterrows():
-        if index > lower_limit and index < upper_limit:
-            
-            current_time = data.iloc[index+1]["R.Time (min)"]
-            current_row_values = row[['R.Time (min)', 'Intensity']]
-            next_row_values = data.iloc[row.name + 1][['R.Time (min)', 'Intensity']]
-       
-            delta_current = abs((next_row_values - current_row_values)["Intensity"])
+    df_local_saddle_point = pd.DataFrame(columns=['R.Time (min)', 'Intensity', 'Peak Type'])
 
-            delta_dict[index+1] = delta_current
+    if lower_limit is not None and upper_limit is not None:
 
-        else:
-            continue
+        lower_limit = data.index[data["R.Time (min)"]==lower_limit].tolist()[0] 
+        upper_limit = data.index[data["R.Time (min)"]==upper_limit].tolist()[0]
+
+        delta_dict = {}
+        for index, row in data.iterrows():
+            if index > lower_limit and index < upper_limit:
+                
+                current_time = data.iloc[index+1]["R.Time (min)"]
+                current_row_values = row[['R.Time (min)', 'Intensity']]
+                next_row_values = data.iloc[row.name + 1][['R.Time (min)', 'Intensity']]
         
-    saddlepoint_index = min(delta_dict, key=delta_dict.get)
-    saddlepoint_time = data.iloc[saddlepoint_index-1]["R.Time (min)"]
-    saddlepoint_intensity = data.iloc[saddlepoint_index-1]["Intensity"]
+                delta_current = abs((next_row_values - current_row_values)["Intensity"])
+
+                delta_dict[index+1] = delta_current
+
+            else:
+                continue
+            
+        saddlepoint_index = min(delta_dict, key=delta_dict.get)
+        saddlepoint_time = data.iloc[saddlepoint_index-1]["R.Time (min)"]
+        saddlepoint_intensity = data.iloc[saddlepoint_index-1]["Intensity"]
+
+        local_saddle_point_dict = {}
+        local_saddle_point_dict[saddlepoint_time] = saddlepoint_intensity
+        df_local_saddle_point = pd.DataFrame(local_saddle_point_dict.items(), columns=['R.Time (min)', 'Intensity'])
+        df_local_saddle_point["Peak Type"] = "Saddlepoint"        
+
     
-    return saddlepoint_time, saddlepoint_intensity
+        return df_local_saddle_point
 
 
