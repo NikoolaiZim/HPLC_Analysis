@@ -7,6 +7,7 @@ def render(app: Dash):
 
     @app.callback(
         Output(ids.RESET_BUTTON, 'n_clicks'),
+        
         Input(ids.RESET_BUTTON, 'n_clicks')
     )
     def update(reset):
