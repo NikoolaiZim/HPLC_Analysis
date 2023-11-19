@@ -2,7 +2,7 @@ from dash import Dash, html
 import pandas as pd
 
 
-from src.components import input_prominence, line_plot, slider_chart_intervall, table_peaks, button_reset
+from src.components import input_prominence, line_plot, slider_chart_intervall, table_peaks, button_reset, input_saddle_point
 
 
 def create_layout(app: Dash, data: pd.DataFrame) -> html.Div():
@@ -29,6 +29,10 @@ def create_layout(app: Dash, data: pd.DataFrame) -> html.Div():
                             "justify-content": "flex-end",
                             "margin-right": "150px",
                             "margin-top": "10px", }),
+            html.Hr(),
+            html.H5("Calculate Saddle Point"),
+            html.Div(input_saddle_point.render(app, data),
+                     style={"margin-top": "10px"}),
             html.Hr(),
             html.H5("Define Time Intervall"),
             html.Div(html.Div(slider_chart_intervall.render(app, data),
