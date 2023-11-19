@@ -42,16 +42,19 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div():
                 y_selectedRange = selectedData["range"]["y"]
         
         fig = go.Figure(
-            layout=go.Layout(xaxis={"range": x_selectedRange},yaxis={"range": y_selectedRange}),
+            layout=go.Layout(xaxis={"range": x_selectedRange,"title":"Retention time [min]"},
+                             yaxis={"range": y_selectedRange, "title":"Intensity [mAU]"}),
             data=[go.Scatter(
                 x=data[DataSchema.TIME],
                 y=data[DataSchema.INTENSITY],
                 mode="lines",
+                line={"color": "black"}
             ),
                 go.Scatter(
                 x=df_local_max[DataSchema.TIME],
                 y=df_local_max[DataSchema.INTENSITY],
                 mode="markers",
+                marker={"color": "#00bcff"},
             ),
             ],
         )
@@ -69,7 +72,7 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div():
 
     
     fig = dcc.Graph(id=ids.LINE_PLOT, 
-                    figure=update_fig(prominence=50,selectedData=None,n_clicks=None),
+                    figure=update_fig(prominence=500,selectedData=None,n_clicks=None),
                     style={'width': '100%', 'height': '30%'})
 
     return html.Div(fig)

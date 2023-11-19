@@ -1,5 +1,6 @@
 from dash import Dash, html, dcc, Input, Output 
 
+
 from src.components import ids  
 
 def render(app: Dash):
@@ -12,6 +13,7 @@ def render(app: Dash):
         return 0
 
     button = html.Button(
+                className="button",
                 id=ids.RESET_BUTTON,
                 children="Reset Graph",
             )

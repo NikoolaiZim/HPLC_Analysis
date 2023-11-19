@@ -7,7 +7,7 @@ def render(App: Dash) -> html.Div():
     fig =  dcc.Input(
             id=ids.PROMINENCE_INPUT,
             type='number',
-            value=50
+            value=500
         ),   
 
     return html.Div(fig)
