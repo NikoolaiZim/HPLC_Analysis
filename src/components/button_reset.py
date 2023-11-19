@@ -6,12 +6,12 @@ from src.components import ids
 def render(app: Dash):
 
     @app.callback(
-        [Output(ids.RESET_BUTTON, 'n_clicks'),
-         Output("store", "data")],
+        Output(ids.RESET_BUTTON, 'n_clicks'),
+        
         Input(ids.RESET_BUTTON, 'n_clicks')
     )
     def update(reset):
-        return 0, None
+        return 0
 
     button = html.Button(
                 className="button",

@@ -18,14 +18,16 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div():
         [Input(ids.PROMINENCE_INPUT, 'value'),
          Input(ids.LINE_PLOT, "selectedData"),
          Input(ids.RESET_BUTTON, "n_clicks"),
-         Input(ids.SADDLE_POINT_BUTTON, "n_clicks")],
-         State("store", "data")
+         Input(ids.SADDLE_POINT_BUTTON, "n_clicks"),
+         ],
+         State("store", "data"),
     )
     def update_fig(prominence, selectedData, n_clicks_reset, n_clicks_saddle_point, stored_data):
         df_local_saddle_point = pd.DataFrame(columns=['R.Time (min)', 'Intensity', 'Peak Type'])
         df_local_max = loader.update_peak_values(data, prominence)
         x_range_orig = [data["R.Time (min)"].min(), data["R.Time (min)"].max()]
-        y_range_orig = [data["Intensity"].min(), data["Intensity"].max() + 10000]
+        y_range_orig = [data["Intensity"].min(), data["Intensity"].max() + 15000]
+        
 
         try:
             if ctx.triggered_id == ids.RESET_BUTTON:
@@ -87,7 +89,11 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div():
 
     fig = dcc.Graph(id=ids.LINE_PLOT,
                     figure=update_fig(
-                        prominence=500, selectedData=None, n_clicks_reset=None, n_clicks_saddle_point=None,stored_data=None),
+                        prominence=500, 
+                        selectedData=None, 
+                        n_clicks_reset=None, 
+                        n_clicks_saddle_point=None,
+                        stored_data=None),
                     style={'width': '100%', 'height': '30%'})
 
     return html.Div(fig)

@@ -1,5 +1,5 @@
 import dash
-from dash import Dash, Input, Output, html, State, dcc
+from dash import Dash, Input, Output, html, State, dcc, ctx
 from dash.exceptions import PreventUpdate
 import pandas as pd
 from src.components import ids
@@ -28,10 +28,14 @@ def render(App: Dash, data: pd.DataFrame) -> html.Div():
         [Output(ids.LOWER_BOUNDARY_INPUT, "children"),
          Output(ids.UPPER_BOUNDARY_INPUT, "children"),
          Output('store', 'data')],
-        [Input(ids.LINE_PLOT, "clickData")],
+        [Input(ids.RESET_BUTTON, "n_clicks"),
+        Input(ids.LINE_PLOT, "clickData")],
         [State('store', 'data')]
     )
-    def define_boundaries(clickData, stored_data):
+    def define_boundaries(n_clicks, clickData, stored_data):
+        if ctx.triggered_id == ids.RESET_BUTTON:
+            return None, None, None
+
         if clickData is None:
             raise PreventUpdate
         else:
