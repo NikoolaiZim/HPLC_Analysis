@@ -26,7 +26,7 @@ Users can input two boundary values, and the tool will calculate the saddle poin
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/hplc-evaluation-tool.git
+   git clone https://github.com/NikoolaiZim/HPLC_Analysis.git
 
 2. **Install dependencies:**
    pip install -r requirements.txt
