@@ -52,7 +52,16 @@ def render(App: Dash, data: pd.DataFrame) -> html.Div():
                     # Perform your calculation here
                     return lower_boundary, upper_boundary, stored_data
 
+    @App.callback(Output(ids.CONFIRM_SP_EVALUATION, 'displayed'),
+                Input(ids.SADDLE_POINT_BUTTON, 'n_clicks'),
+                State('store', 'data'))
+    def display_confirm(value, stored_data):
+        if value > 0 and stored_data != None and len(stored_data) == 2:
+            return False
+        return True
+    
     return div
+
 
 
 def calculate_saddle_point(data: pd.DataFrame, n_clicks: int, stored_data: list) -> pd.DataFrame():

@@ -1,8 +1,8 @@
-from dash import Dash, html
+from dash import Dash, html,dcc
 import pandas as pd
 
 
-from src.components import input_prominence, line_plot, slider_chart_intervall, table_peaks, button_reset, input_saddle_point
+from src.components import ids, input_prominence, line_plot, slider_chart_intervall, table_peaks, button_reset, input_saddle_point
 
 
 def create_layout(app: Dash, data: pd.DataFrame) -> html.Div():
@@ -11,7 +11,10 @@ def create_layout(app: Dash, data: pd.DataFrame) -> html.Div():
         style={"width": "100%", "height": "2000px",
                "background-color": "#f8f9fa"},
         children=[
-
+            html.Div(dcc.ConfirmDialog(
+                id=ids.CONFIRM_SP_EVALUATION,
+                message="In order to evaluate the saddle-point, please select the upper and lower boundarie in the graph.",
+            ),style={"font-size": "20px"}),
             html.Div(children=[html.H1(app.title,
                                        style={"color": "#00bcff"},
                                        ),
@@ -34,11 +37,6 @@ def create_layout(app: Dash, data: pd.DataFrame) -> html.Div():
             html.Div(input_saddle_point.render(app, data),
                      style={"margin-top": "10px"}),
             html.Hr(),
-            # html.H5("Define Time Intervall"),
-            # html.Div(html.Div(slider_chart_intervall.render(app, data),
-            #                   style={"width": "70%"}),
-            #          style={"display": "flex", "justify-content": "center"}),
-            html.Hr(),
             html.H5("Define Peak Prominence"),
             html.Div(
                 input_prominence.render(app),
@@ -46,6 +44,11 @@ def create_layout(app: Dash, data: pd.DataFrame) -> html.Div():
                        "justify-content": "center",
                        }
             ),
+            html.Hr(),
+            html.H5("Define Time Intervall"),
+            html.Div(html.Div(slider_chart_intervall.render(app, data),
+                              style={"width": "70%"}),
+                     style={"display": "flex", "justify-content": "center"}),
             html.Hr(),
             html.H5("Sample Peaks"),
             html.Div(
