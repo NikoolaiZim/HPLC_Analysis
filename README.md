@@ -26,7 +26,7 @@ Users can input two boundary values, and the tool will calculate the saddle poin
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/hplc-evaluation-tool.git
+   git clone https://github.com/NikoolaiZim/HPLC_Analysis.git
 
 2. **Install dependencies:**
    pip install -r requirements.txt
@@ -36,17 +36,14 @@ Users can input two boundary values, and the tool will calculate the saddle poin
 
 ## Usage
 
-1. **Upload HPLC Data File:**
-   - Use the provided file upload button to upload your HPLC data file.
-
-2. **Adjust Peak Prominence:**
+1. **Adjust Peak Prominence:**
    - Fine-tune peak detection by adjusting the peak prominence parameter.
 
-3. **Use Interval Slider:**
+2. **Use Interval Slider:**
    - Utilize the interval slider to focus on specific retention time intervals in the table.
 
-4. **Input Saddle Point Boundary Values:**
-   - Enter two boundary values for saddle point calculation.
+3. **Input Saddle Point Boundary Values:**
+   - Select two points in the graph to define the boundaries, between which the saddlepoint should be found. Start the calculation with the provided button.
 
 ## Screenshots
 
