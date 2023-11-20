@@ -2,7 +2,7 @@ import pandas as pd
 from dash import Dash, html, dcc
 from src.components import ids
 
-
+# Slider used to update the table view of the peak values
 def render(App: Dash, data: pd.DataFrame):
     return html.Div([
         dcc.RangeSlider(

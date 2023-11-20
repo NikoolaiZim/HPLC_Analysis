@@ -1,13 +1,10 @@
-from dash import Dash, html, dcc, Input, Output 
-
-
+from dash import Dash, html, Input, Output 
 from src.components import ids  
 
 def render(app: Dash):
 
     @app.callback(
         Output(ids.RESET_BUTTON, 'n_clicks'),
-        
         Input(ids.RESET_BUTTON, 'n_clicks')
     )
     def update(reset):

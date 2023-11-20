@@ -3,6 +3,11 @@ from functools import reduce
 from typing import Callable
 from scipy.signal import find_peaks
 
+### ------ Data Loader ------ ###
+# This component provides data loading and handling functionality. 
+# Here calculations of peak values and saddle point determination are defined.
+# The data is loaded from an excel file and preprocessed, e.g. the year and month columns are created.
+### ------------------------------- ###
 
 Preprocessor = Callable[[pd.DataFrame], pd.DataFrame]
 
@@ -44,10 +49,8 @@ def update_peak_values(data: pd.DataFrame, prominence: int):
                         width=3, 
                         height=32000)
 
-
     local_max_dict = {data[DataSchema.TIME][_] : data[DataSchema.INTENSITY][_] for _ in peaks}
     
-
     df_local_max = pd.DataFrame(local_max_dict.items(), columns=['R.Time (min)', 'Intensity'])
     df_local_max["Peak Type"] = "Peak"
 
@@ -55,6 +58,9 @@ def update_peak_values(data: pd.DataFrame, prominence: int):
 
     return df_local_max
 
+# The function get_saddle_point identifies the saddle point between a given lower and upper limit in a DataFrame.
+# It calculates the minimum difference in intensity between consecutive rows within these limits.
+# The time and intensity of the saddle point are then extracted from the DataFrame.
 def get_saddle_point(data: pd.DataFrame, lower_limit, upper_limit):
     df_local_saddle_point = pd.DataFrame(columns=['R.Time (min)', 'Intensity', 'Peak Type'])
 

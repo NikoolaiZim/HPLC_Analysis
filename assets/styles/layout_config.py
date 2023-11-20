@@ -1,3 +1,5 @@
+# Desc: Layout configuration for the line plot
+
 layout_parameters = {
     "xaxis": {
         "showline": True,
