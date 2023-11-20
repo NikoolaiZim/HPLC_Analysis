@@ -25,7 +25,7 @@ def create_layout(app: Dash, data: pd.DataFrame) -> html.Div():
                             "heigth": "50px",
                             "margin-right": "40px"},),
             html.Hr(),
-            html.H3("Measurement 1 - Triphenylamine"),
+            html.H3("Measurement 1 - Tris(2-carboxyethyl)phosphin"),
             line_plot.render(app, data),
             html.Div(button_reset.render(app),
                      style={"display": "flex",
