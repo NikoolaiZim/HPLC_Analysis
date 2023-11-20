@@ -47,7 +47,7 @@ Users can input two boundary values, and the tool will calculate the saddle poin
 
 ## Screenshots
 
-![logo](https://github.com/NikoolaiZim/HPLC_Analysis/assets/102020689/dc8d05de-3d3b-4283-8c95-0934f627e7f5)
+![overall](https://github.com/NikoolaiZim/HPLC_Analysis/assets/102020689/550c9d70-4bfa-4de4-8a19-a332dc495057)
 
 ## Contributing
 
