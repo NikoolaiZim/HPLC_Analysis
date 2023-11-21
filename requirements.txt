@@ -1,0 +1,8 @@
+Babel
+dash
+dash_bootstrap_components
+pandas
+pandas-stubs
+plotly
+python-i18n
+scipy
